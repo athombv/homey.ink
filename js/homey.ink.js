@@ -9,6 +9,8 @@ window.addEventListener('load', function() {
   
   var $text = document.getElementById('text');
   var $logo = document.getElementById('logo');
+  var $weatherTemperature = document.getElementById('weather-temperature');
+  var $weatherState = document.getElementById('weather-state');
   var $flowsInner = document.getElementById('flows-inner');
   var $devicesInner = document.getElementById('devices-inner');
   
@@ -38,13 +40,19 @@ window.addEventListener('load', function() {
     return homey.authenticate();
   }).then(function(homey_) {
     homey = homey_;
-    console.log('homey', homey)
         
     return homey.users.getUserMe().then(function(user) {
       me = user;
       me.properties = me.properties || {};
       me.properties.favoriteFlows = me.properties.favoriteFlows || [];
       me.properties.favoriteDevices = me.properties.favoriteDevices || [];
+      
+      homey.weather.getWeather().then(function(weather) {
+        $weatherTemperature.innerHTML = Math.round(weather.temperature);
+        $weatherState.innerHTML = weather.state;
+      }).catch(function(error){
+        document.write(error);
+      });
       
       homey.flow.getFlows().then(function(flows) {
         var favoriteFlows = me.properties.favoriteFlows.map(function(flowId){
@@ -53,7 +61,9 @@ window.addEventListener('load', function() {
           return !!flow;
         });
         return renderFlows(favoriteFlows);        
-      }).catch(document.write);
+      }).catch(function(error){
+        document.write(error);
+      });
       
       homey.devices.getDevices().then(function(devices) {
         var favoriteDevices = me.properties.favoriteDevices.map(function(deviceId){
