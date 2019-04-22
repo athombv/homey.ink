@@ -125,6 +125,7 @@ body {
     .flows {
     }
       .flow {
+        position: relative;
         display: inline-block;
         vertical-align: middle;
         overflow: hidden;
@@ -132,8 +133,23 @@ body {
         height: 64px;
         border: 2px solid black;
         border-radius: 64px;
+        overflow: hidden;
         font-size: 0;
         margin-right: 24px;
+      }
+      .flow.running:before {
+        content: "✓";
+        color: white;
+        text-align: center;
+        line-height: 64px;
+        display: block;
+        background: black;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        font-size: 32px;
       }
         .flow .play {
           display: inline-block;

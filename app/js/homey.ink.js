@@ -51,10 +51,7 @@ window.addEventListener('load', function() {
     later.setInterval(function(){
       renderHomey();
     }, later.parse.text('every 1 hour'));
-  }).catch(function(err) {
-    console.error(err);
-    document.write(err);
-  });
+  }).catch(console.error);
   
   function renderHomey() {
     homey.users.getUserMe().then(function(user) {
@@ -112,12 +109,17 @@ window.addEventListener('load', function() {
       var $flow = document.createElement('div');
       $flow.id = 'flow-' + flow.id;
       $flow.classList.add('flow');
-      $flow.addEventListener('click', function(){
+      $flow.addEventListener('click', function(){        
+        if( $flow.classList.contains('running') ) return;
         homey.flow.triggerFlow({
           id: flow.id,
-        }).catch(function(error){
-          document.write(error);
-        });
+        }).then(function(){          
+          
+          $flow.classList.add('running');                
+          setTimeout(function(){
+            $flow.classList.remove('running');
+          }, 3000);
+        }).catch(console.error);
       });
       $flowsInner.appendChild($flow);
       
@@ -146,9 +148,7 @@ window.addEventListener('load', function() {
           deviceId: device.id,
           capabilityId: 'onoff',
           value: value,
-        }).catch(function(error){
-          document.write(error);
-        });
+        }).catch(console.error);
       });
       $devicesInner.appendChild($device);
       
