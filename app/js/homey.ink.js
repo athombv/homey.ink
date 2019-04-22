@@ -86,6 +86,16 @@ window.addEventListener('load', function() {
           if(device.ui.quickAction !== 'onoff') return false;          
           return true;
         });
+        
+        favoriteDevices.forEach(function(device){
+          device.makeCapabilityInstance('onoff', function(value){
+            var $device = document.getElementById('device-' + device.id);
+            if( $device ) {
+              $device.classList.toggle('on', !!value);
+            }
+          });
+        });
+        
         return renderDevices(favoriteDevices);
       }).catch(console.error);
     }).catch(console.error);
@@ -100,6 +110,7 @@ window.addEventListener('load', function() {
     $flowsInner.innerHTML = '';
     flows.forEach(function(flow) {
       var $flow = document.createElement('div');
+      $flow.id = 'flow-' + flow.id;
       $flow.classList.add('flow');
       $flow.addEventListener('click', function(){
         homey.flow.triggerFlow({
@@ -125,6 +136,7 @@ window.addEventListener('load', function() {
     $devicesInner.innerHTML = '';
     devices.forEach(function(device) {
       var $device = document.createElement('div');
+      $device.id = 'device-' + device.id;
       $device.classList.add('device');
       $device.classList.toggle('on', device.capabilitiesObj && device.capabilitiesObj.onoff && device.capabilitiesObj.onoff.value === true);
       $device.addEventListener('click', function(){
