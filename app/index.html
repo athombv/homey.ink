@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=1080, height=1440, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Homey.ink — E Ink dashboard</title>
+    <link rel="stylesheet" type="text/css" href="./css/homey.ink.css">
+    <script type="text/javascript" src="//cdn.athom.com/athom-api/2.1.180/athom-api.min.js"></script>
+    <script type="text/javascript" src="./js/homey.ink.js"></script>
+  </head>
+  <body>
+    
+    <div id="container">
+      
+      <div id="container-inner">
+        
+        <div id="logo"></div>
+        
+        <div id="text">
+          <div id="text-large">Good morning!</div>
+          <div id="text-small">Today is Saturday the 20th of April.</div>
+        </div>
+        
+        <div id="weather">
+          <div id="weather-temperature">n/a</div>
+          <div id="weather-state">n/a</div>
+        </div>
+        
+        <div id="flows" class="favorites">
+          <h2>Favorite Flows</h2>
+          <div id="flows-inner" class="flows favorites-inner"></div>
+        </div>
+        
+        <div id="devices" class="favorites">
+          <h2>Favorite Devices</h2>
+          <div id="devices-inner" class="devices favorites-inner"></div>
+        </div>
+      
+      </div>
+    </div>
+    
+  </body>
+</html>
