@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1080, height=1440, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Homey.ink — E Ink dashboard</title>
+    <title>Homey.ink</title>
     <link rel="stylesheet" type="text/css" href="./css/homey.ink.css">
     <script type="text/javascript" src="//cdn.athom.com/athom-api/2.1.180/athom-api.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="./js/polyfill.js"></script>
+    <script type="text/javascript" src="./js/later.js"></script>
     <script type="text/javascript" src="./js/homey.ink.js"></script>
   </head>
   <body>
@@ -17,8 +20,8 @@
         <div id="logo"></div>
         
         <div id="text">
-          <div id="text-large">Good morning!</div>
-          <div id="text-small">Today is Saturday the 20th of April.</div>
+          <div id="text-large"></div>
+          <div id="text-small"></div>
         </div>
         
         <div id="weather">

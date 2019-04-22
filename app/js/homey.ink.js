@@ -7,7 +7,8 @@ window.addEventListener('load', function() {
   var homey;
   var me;
   
-  var $text = document.getElementById('text');
+  var $textLarge = document.getElementById('text-large');
+  var $textSmall = document.getElementById('text-small');
   var $logo = document.getElementById('logo');
   var $weatherTemperature = document.getElementById('weather-temperature');
   var $weatherState = document.getElementById('weather-state');
@@ -18,6 +19,11 @@ window.addEventListener('load', function() {
     window.location.reload();
   });
   
+  renderText();
+  later.setInterval(function(){
+    renderText();
+  }, later.parse.text('every 1 hour'));
+
   var api = new AthomCloudAPI({
     clientId: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
@@ -40,19 +46,26 @@ window.addEventListener('load', function() {
     return homey.authenticate();
   }).then(function(homey_) {
     homey = homey_;
-        
-    return homey.users.getUserMe().then(function(user) {
+    
+    renderHomey();    
+    later.setInterval(function(){
+      renderHomey();
+    }, later.parse.text('every 1 hour'));
+  }).catch(function(err) {
+    console.error(err);
+    document.write(err);
+  });
+  
+  function renderHomey() {
+    homey.users.getUserMe().then(function(user) {
       me = user;
       me.properties = me.properties || {};
       me.properties.favoriteFlows = me.properties.favoriteFlows || [];
       me.properties.favoriteDevices = me.properties.favoriteDevices || [];
       
       homey.weather.getWeather().then(function(weather) {
-        $weatherTemperature.innerHTML = Math.round(weather.temperature);
-        $weatherState.innerHTML = weather.state;
-      }).catch(function(error){
-        document.write(error);
-      });
+        return renderWeather(weather);
+      }).catch(console.error);
       
       homey.flow.getFlows().then(function(flows) {
         var favoriteFlows = me.properties.favoriteFlows.map(function(flowId){
@@ -61,9 +74,7 @@ window.addEventListener('load', function() {
           return !!flow;
         });
         return renderFlows(favoriteFlows);        
-      }).catch(function(error){
-        document.write(error);
-      });
+      }).catch(console.error);
       
       homey.devices.getDevices().then(function(devices) {
         var favoriteDevices = me.properties.favoriteDevices.map(function(deviceId){
@@ -76,15 +87,14 @@ window.addEventListener('load', function() {
           return true;
         });
         return renderDevices(favoriteDevices);
-      }).catch(function(error){
-        document.write(error);
-      });
-    });
-    
-  }).catch(function(err) {
-    console.error(err);
-    document.write(err);
-  });
+      }).catch(console.error);
+    }).catch(console.error);
+  }
+  
+  function renderWeather(weather) {
+    $weatherTemperature.innerHTML = Math.round(weather.temperature);
+    $weatherState.innerHTML = weather.state;
+  }
   
   function renderFlows(flows) {
     $flowsInner.innerHTML = '';
@@ -142,6 +152,25 @@ window.addEventListener('load', function() {
     });
   }
   
+  function renderText() {
+    var now = new Date();
+    var hours = now.getHours();
+    
+    var tod;
+    if( hours >= 18 ) {
+      tod = 'evening';
+    } else if( hours >= 12 ) {
+      tod = 'afternoon';
+    } else if( hours >= 6 ) {
+      tod = 'morning';
+    } else {
+      tod = 'night';
+    }
+    
+    $textLarge.innerHTML = 'Good ' + tod + '!';
+    $textSmall.innerHTML = 'Today is ' + moment(now).format('dddd[, the ]Do[ of ]MMMM YYYY[.]');
+  }
+  
 });
 
 function getQueryVariable(variable) {
@@ -154,55 +183,4 @@ function getQueryVariable(variable) {
       }
   }
   console.log('Query variable %s not found', variable);
-}
-
-// Polyfills
-if (!String.prototype.startsWith) {
-	String.prototype.startsWith = function(search, pos) {
-		return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
-	};
-}
-
-if (!Array.prototype.find) {
-  Object.defineProperty(Array.prototype, 'find', {
-    value: function(predicate) {
-     // 1. Let O be ? ToObject(this value).
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
-      }
-
-      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-      var thisArg = arguments[1];
-
-      // 5. Let k be 0.
-      var k = 0;
-
-      // 6. Repeat, while k < len
-      while (k < len) {
-        // a. Let Pk be ! ToString(k).
-        // b. Let kValue be ? Get(O, Pk).
-        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-        // d. If testResult is true, return kValue.
-        var kValue = o[k];
-        if (predicate.call(thisArg, kValue, k, o)) {
-          return kValue;
-        }
-        // e. Increase k by 1.
-        k++;
-      }
-
-      // 7. Return undefined.
-      return undefined;
-    }
-  });
 }
