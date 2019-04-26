@@ -78,12 +78,12 @@ window.addEventListener('load', function() {
           return !!device;
         }).filter(function(device){
           if(!device.ui) return false;
-          if(device.ui.quickAction !== 'onoff') return false;          
+          if(!device.ui.quickAction) return false;
           return true;
         });
         
         favoriteDevices.forEach(function(device){
-          device.makeCapabilityInstance('onoff', function(value){
+          device.makeCapabilityInstance(device.ui.quickAction, function(value){
             var $device = document.getElementById('device-' + device.id);
             if( $device ) {
               $device.classList.toggle('on', !!value);
@@ -138,13 +138,13 @@ window.addEventListener('load', function() {
       var $device = document.createElement('div');
       $device.id = 'device-' + device.id;
       $device.classList.add('device');
-      $device.classList.toggle('on', device.capabilitiesObj && device.capabilitiesObj.onoff && device.capabilitiesObj.onoff.value === true);
+      $device.classList.toggle('on', device.capabilitiesObj && device.capabilitiesObj[device.ui.quickAction] && device.capabilitiesObj[device.ui.quickAction].value === true);
       $device.addEventListener('click', function(){
         var value = !$device.classList.contains('on');
         $device.classList.toggle('on', value);
         homey.devices.setCapabilityValue({
           deviceId: device.id,
-          capabilityId: 'onoff',
+          capabilityId: device.ui.quickAction,
           value: value,
         }).catch(console.error);
       });

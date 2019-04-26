@@ -4,7 +4,7 @@ const REDIRECT_URL = `${window.location.protocol}//${window.location.host}/login
 
 window.addEventListener('load', () => {
   
-  let token;
+  let homepage;
   let config;
 
   const api = new AthomCloudAPI({
@@ -33,8 +33,16 @@ window.addEventListener('load', () => {
       const { code } = message.data;
       if(!code) return alert('Something went wrong.');
       
-      api.authenticateWithAuthorizationCode(code).then(token_ => {
-        token = btoa(JSON.stringify(token_));
+      api.authenticateWithAuthorizationCode(code).then(token => {
+        token = JSON.stringify(token);
+        token = btoa(token);
+        
+        const url = new URL('https://homey.ink/app/index.html');
+        url.searchParams.append('token', token);
+        url.searchParams.append('theme', 'kobo-h2o');
+        
+        homepage = url.toString();
+        console.log('URL:', homepage);
         
         $setupStepLogin.classList.add('completed');
         $setupStepUpload.classList.remove('disabled');
@@ -52,7 +60,7 @@ window.addEventListener('load', () => {
       config = window.ini.parse(e.target.result);
       
       config.Browser = config.Browser || {};
-      config.Browser.homePage = 'https://homey.ink/app/index.html?token=' + token;      
+      config.Browser.homePage = homepage;      
       
       config.FeatureSettings = config.FeatureSettings || {};
       config.FeatureSettings.FullScreenBrowser = true;
