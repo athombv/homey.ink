@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,400i,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #fcf8ed url(../img/bg.png) repeat;
+  font-family: "Roboto Slab", serif;
+  font-size: 16px;
+  color: black;
+}
+
+.hero {
+  height: 50vw;;
+  max-height: 700px;
+  background: #fefffe url(../img/hero-tile.png) repeat;
+  border-bottom: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 0 100px rgba(0,0,0,0.3);
+  margin-bottom: 80px;
+  display: flex;
+  overflow: hidden;
+}
+  .hero-device-wrap {
+    position: relative;
+    z-index: 2;
+    width: 70%;
+    height: 100%;
+    box-shadow: 0 0 100px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    .hero-device {
+      height: 697px;
+      background: url(../img/hero-device.png) no-repeat center center;
+      background-size: contain;
+      width: 100%;
+      max-width: 871px;
+    }
+  .hero-room {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 30%;
+    background: url(../img/hero-room.jpg) no-repeat left center;
+    background-size: cover;
+  }
+
+.section {
+  position: relative;
+  max-width: 900px;
+  padding: 0 20px;
+  margin: 0 auto 100px;
+}
+
+  .title,
+  .subtitle {
+    color: #3F3C39;
+    font-weight: 700;
+    text-align: center;
+  }
+  .title {
+    font-size: 64px;
+  }
+  .subtitle {
+    font-size: 32px;
+  }
+  .section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 1em;
+  }
+  .section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0.3em;
+    color: #888;
+  }
+  .section p {
+    font-size: 24px;
+    margin-bottom: 1em;
+  }
+  .section ul.hints {
+    list-style: none;
+    color: #888;
+    font-size: 16px;
+    line-height: 32px;
+  }
+  
+  .bubble {
+    position: relative;
+    overflow: hidden;
+    
+    width: 250px;
+    height: 250px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .setup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+    .setup-arrow {
+      color: black;
+      opacity: 0.1;
+      font-size: 40px;
+      margin: 0 10px;
+    }
+    .setup-arrow:before {
+      content: "→";
+      display: block;
+    }
+    .setup-step {
+    }
+    .setup-step.disabled:before,
+    .setup-step.completed:before {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background: white;
+      opacity: 0.9;
+    }
+    .setup-step.completed:after {
+      position: absolute;
+      z-index: 4;
+      content: "✓";
+      top: 50%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #17bd00;
+      line-height: 0;
+      font-size: 120px;
+      text-shadow: 0 0 30px rgba(0,0,0,0.1);
+    }
+    .setup-step-count {
+      color: #D5D5D5;
+      font-size: 18px;
+      font-weight: 700;
+      padding-top: 10px;
+    }
+    .setup-step-text {
+      color: black;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 10px;
+    }
+      .setup-step-text .subtle {
+        opacity: 0.6;
+      }
+    .setup-step-button {
+      position: relative;
+      margin-top: 10px;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      background: rgba(255,159,54,1);
+      background: linear-gradient(to bottom, rgba(255,159,54,1) 0%, rgba(255,118,54,1) 100%);  
+      border-radius: 30px;
+      padding: 10px;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+    .setup-step-button:hover {
+      cursor: pointer;
+      background: linear-gradient(to bottom, rgba(255, 166, 71, 1) 0%, rgba(255, 124, 63, 1) 100%);
+    }
+    .setup-step-button:active {
+      background: linear-gradient(to bottom, rgba(255, 148, 33, 1) 0%, rgba(255, 106, 37, 1) 100%);        
+    }
+      #setup-step-upload-file {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+  .devices {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 50px;    
+  }
+    .device {
+      padding: 30px;
+      height: auto;
+      margin-right: 50px;
+      align-self: stretch;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+      .device-image {
+        display: block;
+        align-self: center;
+        margin-bottom: 30px;
+      }
+      .device-name {
+        font-size: 18px;
+        font-weight: 400;
+        font-style: normal;
+      }
+        .device-name a {
+          color: #0078ff;
+          font-style: normal;
+          text-decoration: none;
+        }
+        .device-name a:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+  
+.footer {
+  box-shadow: 0 0 100px rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.8);
+  background: rgba(0,0,0, 0.85);
+  text-align: center;
+  padding: 60px 0;
+}
+  .footer p {
+    color: white;
+    font-size: 14px;
+  }
+  .footer p:not(:last-child) {
+    margin-bottom: 1em;
+  }

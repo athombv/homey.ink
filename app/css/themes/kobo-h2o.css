@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
+
+body {
+  font-family: "Roboto Slab";
+}
+
+#container {
+  width: 1440px;
+  height: 1080px;
+  padding: 64px;
+  -webkit-transform: rotate(90deg) translateX(180px) translateY(180px);
+}
+  
+#weather {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#text {
+  position: absolute;
+  left: 200px;
+  right: 200px;
+}
+
+#flows {
+  top: 310px;
+}
+
+#devices {
+  top: 610px;
+}
+  
+.favorites {
+  position: absolute;
+  left: 0;
+  right: 0;
+}

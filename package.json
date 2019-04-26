@@ -1,0 +1,7 @@
+{
+  "name": "homey.ink",
+  "version": "1.0.0",
+  "config": {
+    "s3BucketProduction": "homey.ink"
+  }
+}

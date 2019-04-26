@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: white;
+  color: black;
+  
+  font-family: Helvetica, sans-serif;
+}
+
+#container {
+  box-sizing: border-box;
+}
+  #container-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  #logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 110px;
+    height: 110px;
+    background: url(../img/logo.png) no-repeat center center;
+    background-size: contain;
+  }
+  
+  #text {
+    text-align: center;
+  }
+  #text-large:after {
+    content: "";
+    display: block;
+    height: 1px;
+    background: black;
+    width: 200px;
+    margin: auto;
+    margin: 40px auto;
+  }
+    #text-large {
+      font-size: 64px;
+      font-weight: 700;  
+      margin: 20px 0 0 0;
+    }
+    #text-small {
+      font-size: 34px;
+      font-weight: 500;
+      margin-bottom: 50px;
+    }
+  
+  #weather {
+    
+  }
+    #weather-temperature {
+      font-size: 100px;
+      font-weight: 500;
+      line-height: 96px;
+    }
+    #weather-temperature:after {
+      content: "°";
+    }
+    #weather-state {
+      font-size: 48px;
+      font-weight: 700;
+    }
+  
+  .favorites {
+    
+  }
+    .favorites h2 {
+      display: block;
+      width: 1000px;
+      font-size: 42px;
+      font-weight: 700;
+      padding-bottom: 12px;
+      /*
+      border-bottom: 2px solid black;
+      */
+      margin-bottom: 30px;
+    }
+    .favorites h2:after {
+      content: "";
+      display: block;
+      height: 2px;
+      background: linear-gradient(to right, #000000 0%, rgba(0,0,0,0) 100%);
+    }
+    .favorites-inner {
+      font-size: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, #000000 90%, rgba(0,0,0,0) 100%);
+    }
+  
+  #flows {
+  }
+    .flows {
+    }
+      .flow {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        height: 64px;
+        border: 2px solid black;
+        border-radius: 64px;
+        overflow: hidden;
+        font-size: 0;
+        margin-right: 24px;
+      }
+      .flow.running:before {
+        content: "✓";
+        color: white;
+        text-align: center;
+        line-height: 64px;
+        display: block;
+        background: black;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        font-size: 32px;
+      }
+        .flow .play {
+          display: inline-block;
+          vertical-align: middle;
+          width: 64px;
+          height: 64px;
+          background: url(../img/play.png) no-repeat center center;
+          background-size: contain;
+        }
+        .flow .name {
+          display: inline-block;
+          vertical-align: middle;
+          height: 64px;
+          line-height: 64px;
+          font-size: 28px;
+          font-weight: 700;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0 20px;
+          max-width: 300px;
+        }
+    
+  #devices {
+    
+  }
+    .devices {
+      
+    }
+      .device {
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border: 2px solid black;
+        border-radius: 32px;
+        box-sizing: border-box;
+        padding: 24px;
+        margin-right: 24px;
+        
+        opacity: 0.5;
+      }
+      .device.on {
+        opacity: 1;
+      }
+        .device .icon {
+          width: 90px;
+          height: 90px;
+          background: black;
+          margin-bottom: 6px;
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-position: center center;
+        }
+        .device .name {
+          width: 100%;
+          font-size: 28px;
+          height: 64px;
+          line-height: 32px;
+          font-weight: 700;
+          overflow: hidden;
+          white-space: normal;
+          text-overflow: ellipsis;
+        }
