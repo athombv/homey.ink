@@ -37,7 +37,7 @@ window.addEventListener('load', () => {
         token = JSON.stringify(token);
         token = btoa(token);
         
-        const url = new URL('https://homey.ink/app/index.html');
+        const url = new URL('https://app.homey.ink');
         url.searchParams.append('theme', 'kobo-h2o');
         url.searchParams.append('token', token);
         
