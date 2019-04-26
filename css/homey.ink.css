@@ -86,15 +86,17 @@ body {
     color: #888;
   }
   .section p {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 1em;
   }
   .section ul.hints {
     list-style: none;
     color: #888;
     font-size: 16px;
-    line-height: 32px;
   }
+    .section ul.hints li {
+      margin-bottom: 1em;
+    }
   
   .bubble {
     position: relative;
@@ -230,7 +232,7 @@ body {
         font-style: normal;
       }
         .device-name a {
-          color: #0078ff;
+          color: #d6b340;
           font-style: normal;
           text-decoration: none;
         }
@@ -253,3 +255,32 @@ body {
   .footer p:not(:last-child) {
     margin-bottom: 1em;
   }
+    .footer p a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .footer p a:hover {
+      text-decoration: underline;
+    }
+  
+@media only screen and (max-width: 900px) {
+  .setup,
+  .devices {
+    flex-direction: column;
+  }
+  .setup-arrow {    
+    margin: 10px 0;
+  }
+  .setup-arrow:before {
+    content: "↓";
+  }
+  .device {
+    margin-right: 0;
+    margin-bottom: 50px;
+    align-self: auto;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+}
