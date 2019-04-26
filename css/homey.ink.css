@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,400i,700');
 
 * {
   margin: 0;
@@ -21,6 +21,7 @@ body {
 
 .hero {
   height: 50vw;;
+  max-height: 700px;
   background: #fefffe url(../img/hero-tile.png) repeat;
   border-bottom: 1px solid rgba(255,255,255,0.6);
   box-shadow: 0 0 100px rgba(0,0,0,0.3);
@@ -73,15 +74,26 @@ body {
   .subtitle {
     font-size: 32px;
   }
-  
   .section h2 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 1em;
   }
+  .section h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0.3em;
+    color: #888;
+  }
   .section p {
     font-size: 24px;
     margin-bottom: 1em;
+  }
+  .section ul.hints {
+    list-style: none;
+    color: #888;
+    font-size: 16px;
+    line-height: 32px;
   }
   
   .bubble {
@@ -107,6 +119,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 50px;
   }
     .setup-arrow {
       color: black;
@@ -162,6 +175,7 @@ body {
         opacity: 0.6;
       }
     .setup-step-button {
+      position: relative;
       margin-top: 10px;
       color: white;
       font-size: 20px;
@@ -180,6 +194,15 @@ body {
     .setup-step-button:active {
       background: linear-gradient(to bottom, rgba(255, 148, 33, 1) 0%, rgba(255, 106, 37, 1) 100%);        
     }
+      #setup-step-upload-file {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
   .devices {
     
   }

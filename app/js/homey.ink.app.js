@@ -1,6 +1,5 @@
 var CLIENT_ID = '5cbb504da1fc782009f52e46';
 var CLIENT_SECRET = 'gvhs0gebgir8vz8yo2l0jfb49u9xzzhrkuo1uvs8';
-var REDIRECT_URL = 'http://localhost:5000';
 
 window.addEventListener('load', function() {
   
@@ -27,7 +26,6 @@ window.addEventListener('load', function() {
   var api = new AthomCloudAPI({
     clientId: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    redirectUrl: REDIRECT_URL,
   });
   
   var token = getQueryVariable('token');
@@ -184,15 +182,3 @@ window.addEventListener('load', function() {
   }
   
 });
-
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == variable) {
-          return decodeURIComponent(pair[1]);
-      }
-  }
-  console.log('Query variable %s not found', variable);
-}
