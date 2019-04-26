@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
-
 * {
   margin: 0;
   padding: 0;
@@ -16,17 +14,11 @@ body {
   background: white;
   color: black;
   
-  font-family: "Roboto Slab";
+  font-family: Helvetica, sans-serif;
 }
 
 #container {
-  width: 1440px;
-  height: 1080px;
-  
-  padding: 64px;
   box-sizing: border-box;
-  
-  -webkit-transform: rotate(90deg) translateX(180px) translateY(180px);
 }
   #container-inner {
     position: relative;
@@ -45,9 +37,6 @@ body {
   }
   
   #text {
-    position: absolute;
-    left: 200px;
-    right: 200px;
     text-align: center;
   }
   #text-large:after {
@@ -71,9 +60,7 @@ body {
     }
   
   #weather {
-    position: absolute;
-    left: 0;
-    top: 0;
+    
   }
     #weather-temperature {
       font-size: 100px;
@@ -89,9 +76,6 @@ body {
     }
   
   .favorites {
-    position: absolute;
-    left: 0;
-    right: 0;
     
   }
     .favorites h2 {
@@ -120,7 +104,6 @@ body {
     }
   
   #flows {
-    top: 310px;
   }
     .flows {
     }
@@ -174,7 +157,7 @@ body {
         }
     
   #devices {
-    top: 610px;
+    
   }
     .devices {
       

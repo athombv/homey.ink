@@ -204,11 +204,20 @@ body {
         cursor: pointer;
       }
   .devices {
-    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 50px;    
   }
     .device {
       padding: 30px;
       height: auto;
+      margin-right: 50px;
+      align-self: stretch;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
       .device-image {
         display: block;
@@ -218,7 +227,17 @@ body {
       .device-name {
         font-size: 18px;
         font-weight: 400;
+        font-style: normal;
       }
+        .device-name a {
+          color: #0078ff;
+          font-style: normal;
+          text-decoration: none;
+        }
+        .device-name a:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
   
 .footer {
   box-shadow: 0 0 100px rgba(0,0,0,0.2);

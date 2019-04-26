@@ -38,8 +38,8 @@ window.addEventListener('load', () => {
         token = btoa(token);
         
         const url = new URL('https://homey.ink/app/index.html');
-        url.searchParams.append('token', token);
         url.searchParams.append('theme', 'kobo-h2o');
+        url.searchParams.append('token', token);
         
         homepage = url.toString();
         console.log('URL:', homepage);

@@ -28,6 +28,13 @@ window.addEventListener('load', function() {
     clientSecret: CLIENT_SECRET,
   });
   
+  var theme = getQueryVariable('theme');
+  var $css = document.createElement('link');
+  $css.rel = 'stylesheet';
+  $css.type = 'text/css';
+  $css.href = './css/themes/' + theme + '.css';
+  document.head.appendChild($css);
+  
   var token = getQueryVariable('token');
   token = atob(token);
   token = JSON.parse(token);
