@@ -27,8 +27,8 @@ To run this locally:
 npm i -g serve
 git checkout git@github.com:athombv/homey.ink.git
 cd homey.ink
-serve -p 5000
+serve -p 5000 app
 ```
-Then visit `http://localhost:5000/app/index.html?token=YOUR_TOKEN&theme=YOUR_THEME`.
+Then visit `http://localhost:5000/?token=YOUR_TOKEN&theme=YOUR_THEME`.
 
 > Your token can be acquired by visiting https://homey.ink and looking in the console after logging in.
