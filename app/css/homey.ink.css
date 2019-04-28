@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   border: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -39,24 +40,23 @@ body {
   #text {
     text-align: center;
   }
-  #text-large:after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: black;
-    width: 200px;
-    margin: auto;
-    margin: 40px auto;
-  }
     #text-large {
       font-size: 64px;
       font-weight: 700;  
-      margin: 20px 0 0 0;
+      margin-top: 20px;
+    }
+    #text-large:after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: black;
+      width: 200px;
+      margin: auto;
+      margin: 40px auto;
     }
     #text-small {
       font-size: 34px;
       font-weight: 500;
-      margin-bottom: 50px;
     }
   
   #weather {
@@ -84,9 +84,6 @@ body {
       font-size: 42px;
       font-weight: 700;
       padding-bottom: 12px;
-      /*
-      border-bottom: 2px solid black;
-      */
       margin-bottom: 30px;
     }
     .favorites h2:after {
@@ -97,7 +94,7 @@ body {
     }
     .favorites-inner {
       font-size: 0;
-      overflow: hidden;
+      overflow-x: hidden;
       white-space: nowrap;
       overflow: hidden;
       -webkit-mask-image: linear-gradient(to right, #000000 90%, rgba(0,0,0,0) 100%);
@@ -153,6 +150,7 @@ body {
           overflow: hidden;
           text-overflow: ellipsis;
           padding: 0 20px;
+          padding-right: 30px;
           max-width: 300px;
         }
     
@@ -160,7 +158,7 @@ body {
     
   }
     .devices {
-      
+      overflow-y: visible;
     }
       .device {
         display: inline-block;
