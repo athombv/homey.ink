@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
+
+body {
+  font-family: "Roboto Slab";
+}
+
+#container {
+  width: 1020px;
+  height: 740px;
+  padding: 64px;
+  -webkit-transform: rotate(90deg) translateX(80px) translateY(60px);
+}
+#logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#weather {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transform: translateX(40px) scale(1,1);
+}
+
+#text {
+  top: 0px;
+  left: 200px;
+  right: 200px;
+  -webkit-transform: translateX(40px) scale(0.7,0.7);
+}
+
+#text-large {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 20px 0 0 0;
+}
+#text-small {
+  font-size: 34px;
+  font-weight: 500;
+  margin-bottom: 50px;
+}
+
+#flows {
+  top: 200px;
+  -webkit-transform: translateX(40px) scale(1,1);
+}
+
+#devices {
+  top: 400px;
+  -webkit-transform: translateX(40px) scale(1,1);
+}
+
+
+.favorites {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.favorites h2 {
+  display: block;
+  width: 1000px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+#flows {
+}
+  .flows {
+  }
+    .flow {
+      border: 3px solid black;
+      height: 48px;
+      border-radius: 48px;
+
+    }
+    .flow .play {
+      width: 48px;
+      height: 48px;
+    }
+    .flow .name {
+      font-size: 24px;
+      height: 48px;
+      line-height: 48px;
+    }
+
+  #devices {
+
+  }
+    .devices {
+    }
+      .device {
+        border: 3px solid black;
+        opacity: 0.5;
+      }
+      .device .icon {
+        opacity: 1;
+      }
+      .device .name {
+        font-size: 24px;
+      }
