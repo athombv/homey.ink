@@ -1,4 +1,8 @@
-@import url(_eink.css);
+@import url(../homey.ink.eink.css);
+
+/*
+ * Theme by: Geurt Dijker
+ */
 
 #container {
   width: 1020px;
