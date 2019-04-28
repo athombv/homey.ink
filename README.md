@@ -25,7 +25,7 @@ To run this locally:
 
 ```
 npm i -g serve
-git checkout git@github.com:athombv/homey.ink.git
+git clone https://github.com/athombv/homey.ink.git
 cd homey.ink
 serve -p 5000 app
 ```
