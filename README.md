@@ -15,7 +15,7 @@ See `/app/css/themes` for the themes' css. To add a theme, simply add a file. Th
 Current themes:
 
 * Kobo Aura H2O (`?theme=kobo-h2o`)
-* Kobo Aura HD (`?theme=kobo-aura-h2o`)
+* Kobo Aura HD (`?theme=kobo-aura-hd`)
 * Web browser (`?theme=web`)
 
 ## Contributing
