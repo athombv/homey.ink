@@ -42,7 +42,14 @@ window.addEventListener('load', () => {
         url.searchParams.append('token', token);
         
         homepage = url.toString();
-        console.log('URL:', homepage);
+        
+        // For the nerds!
+        (function() {
+          const url = new URL('https://app.homey.ink');
+          url.searchParams.append('theme', 'web');
+          url.searchParams.append('token', token);
+          console.log('Web URL:', homepage);
+        })();
         
         $setupStepLogin.classList.add('completed');
         $setupStepUpload.classList.remove('disabled');
