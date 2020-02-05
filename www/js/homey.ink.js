@@ -48,7 +48,7 @@ window.addEventListener('load', () => {
           const url = new URL('https://app.homey.ink');
           url.searchParams.append('theme', 'web');
           url.searchParams.append('token', token);
-          console.log('Web URL:', homepage);
+          console.log('Web URL:', url.toString());
         })();
         
         $setupStepLogin.classList.add('completed');
