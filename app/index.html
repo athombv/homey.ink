@@ -1,69 +1,73 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Homey.ink</title>
-    
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="43200">
-    
-    <meta name="viewport" content="width=user-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
-    <link rel="shortcut icon" href="./img/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./img/favicon.png">
-    <link rel="stylesheet" type="text/css" href="./css/homey.ink.css">
-    
-    <script type="text/javascript" src="//cdn.athom.com/athom-api/2.1.185/athom-api.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script type="text/javascript" src="./js/polyfill.js"></script>
-    <script type="text/javascript" src="./js/later.js"></script>
-    <script type="text/javascript" src="./js/homey.ink.helpers.js"></script>
-    <script type="text/javascript" src="./js/homey.ink.app.js"></script>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54367249-20"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-54367249-20');
-    </script>
-  </head>
-  <body>
-    
-    <div id="container">
-      
-      <div id="container-inner">
-        
-        <div id="header">
-          <div id="logo"></div>
-          
-          <div id="text">
-            <div id="text-large"></div>
-            <div id="text-small"></div>
-          </div>
-          
-          <div id="weather">
-            <div id="weather-temperature">n/a</div>
-            <div id="weather-state">n/a</div>
-          </div>
+
+<head>
+  <title>Homey.ink</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="43200">
+
+  <meta name="viewport"
+    content="width=user-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link rel="shortcut icon" href="./img/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="./img/favicon.png">
+  <link rel="stylesheet" type="text/css" href="./css/homey.ink.css">
+
+  <script type="text/javascript" src="./js/athom-api.min.js"></script>
+  <script type="text/javascript" src="./js/moment.min.js"></script>
+  <script type="text/javascript" src="./js/polyfill.js"></script>
+  <script type="text/javascript" src="./js/later.js"></script>
+  <script type="text/javascript" src="./js/homey.ink.helpers.js"></script>
+  <script type="text/javascript" src="./js/homey.ink.app.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54367249-20"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-54367249-20');
+  </script>
+</head>
+
+<body>
+
+  <div id="container">
+
+    <div id="container-inner">
+
+      <div id="header">
+        <div id="logo"></div>
+
+        <div id="text">
+          <div id="text-large"></div>
+          <div id="text-small"></div>
         </div>
-        
-        <div id="content">
-          <div id="flows" class="favorites">
-            <h2><span>Favorite Flows</span></h2>
-            <div id="flows-inner" class="flows favorites-inner"></div>
-          </div>
-          
-          <div id="devices" class="favorites">
-            <h2><span>Favorite Devices</span></h2>
-            <div id="devices-inner" class="devices favorites-inner"></div>
-          </div>
+
+        <div id="weather">
+          <div id="weather-temperature">n/a</div>
+          <div id="weather-state">n/a</div>
         </div>
-      
       </div>
+
+      <div id="content">
+        <div id="flows" class="favorites">
+          <h2><span>Favorite Flows</span></h2>
+          <div id="flows-inner" class="flows favorites-inner"></div>
+        </div>
+
+        <div id="devices" class="favorites">
+          <h2><span>Favorite Devices</span></h2>
+          <div id="devices-inner" class="devices favorites-inner"></div>
+        </div>
+      </div>
+
     </div>
-    
-  </body>
+  </div>
+
+</body>
+
 </html>

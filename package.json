@@ -1,7 +1,13 @@
 {
   "name": "homey.ink",
   "version": "1.0.0",
-  "config": {
-    "s3BucketProduction": "homey.ink"
+  "scripts": {
+    "build": "rm -rf build; mkdir -p build; cp -r app www build;"
+  },
+  "s3": {
+    "production": {
+      "region": "eu-west-1",
+      "bucket": "homey.ink"
+    }
   }
 }

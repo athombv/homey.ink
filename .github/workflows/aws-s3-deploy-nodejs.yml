@@ -1,0 +1,119 @@
+name: Build & Deploy Node.js to AWS S3
+
+# v1.0.1
+
+# Changelog:
+# v1.0.1 - Added playground branch
+#
+# This workflow runs `npm run build` and then syncs the `build` folder to S3.
+#
+# Required Secrets:
+# — AWS_ACCESS_KEY_ID
+# — AWS_ACCESS_KEY_SECRET
+#
+# Optional Secrets:
+# — SSH_KEY
+# - SLACK_WEBHOOK_URL
+#
+# Specify the right branches when to start this workflow below, under `on`
+# Then, in your package.json, specify a property `eb` with the following syntax:
+#
+# {
+#   "s3": {
+#     "my-branch": {
+#       "region": "eu-west-1",
+#       "bucket": "MyApp"
+#     }
+#   }
+# }
+#
+# For example:
+#
+# {
+#   "s3": {
+#     "staging": {
+#       "region": "eu-west-1",
+#       "bucket": "my-bucket-dev"
+#     },
+#     "production": {
+#       "region": "eu-west-1",
+#       "bucket": "my-bucket-prod"
+#     }
+#   }
+# }
+#
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - testing
+      - testing/**
+      - staging
+      - staging/**
+      - production
+      - production/**
+      - playground
+      - playground/**
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.4.1
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        if: env.SSH_KEY != null
+        with:
+          ssh-private-key: ${{ env.SSH_KEY }}
+
+      - name: Setup Time
+        uses: srfrnk/current-time@v1.1.0
+        id: current-time
+        with:
+          format: YYYY-MM-DD-HH-mm-ss
+      
+      # Set environment variables
+      - run: echo GH_BRANCH=${GITHUB_REF#refs/heads/} >> $GITHUB_ENV
+      - run: echo S3_REGION=$(cat package.json | jq -r .s3[\"$GH_BRANCH\"].region) >> $GITHUB_ENV
+      - run: echo S3_BUCKET=$(cat package.json | jq -r .s3[\"$GH_BRANCH\"].bucket) >> $GITHUB_ENV
+      - run: echo Branch $GH_BRANCH, Region $S3_REGION, Bucket $S3_BUCKET
+      
+      # Build
+      - name: Build
+        run: npm run build
+
+      # Deploy
+      - name: Deploy
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ env.S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+          AWS_REGION: ${{ env.S3_REGION }}
+          SOURCE_DIR: 'build'
+
+       # Post a Slack notification
+      - name: Slack Notify
+        uses: innocarpe/actions-slack@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: env.SLACK_WEBHOOK_URL != null
+        with:
+          status: ${{ job.status }}
+          success_text: '✅ ${{github.repository}} - ${{ env.EB_ENV }} (${{ env.EB_REGION }})'
+          failure_text: '❌ ${{github.repository}} - ${{ env.EB_ENV }} (${{ env.EB_REGION }})'
