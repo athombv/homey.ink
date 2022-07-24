@@ -2,7 +2,8 @@
   "name": "homey.ink",
   "version": "1.0.0",
   "scripts": {
-    "build": "rm -rf build; mkdir -p build; cp -r app www build;"
+    "build": "rm -rf build; mkdir -p build; cp -r app www build;",
+    "tools:convert-icons": "node ./tools/convert-icons.js"
   },
   "s3": {
     "production": {

@@ -164,7 +164,9 @@ window.addEventListener('load', function () {
 
       var $icon = document.createElement('div');
       $icon.classList.add('icon');
-      $icon.style.webkitMaskImage = 'url(https://icons-cdn.athom.com/' + device.iconObj.id + '-128.png)';
+      $icon.style.webkitMaskImage = device.iconOverride
+        ? 'url(./img/devices/' + device.iconOverride + '-128.png)'
+        : 'url(https://icons-cdn.athom.com/' + device.iconObj.id + '-128.png)';
       $device.appendChild($icon);
 
       var $name = document.createElement('div');
