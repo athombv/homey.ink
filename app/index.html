@@ -17,6 +17,12 @@
   <link rel="apple-touch-icon" href="./img/favicon.png">
   <link rel="stylesheet" type="text/css" href="./css/homey.ink.css">
 
+  <script type="text/javascript">
+    window.addEventListener('error', function (e) {
+      document.write('<pre>Error: ' + e.message + '\n' + e.stack + '</pre>');
+    });
+  </script>
+
   <script type="text/javascript" src="./js/athom-api.min.js"></script>
   <script type="text/javascript" src="./js/moment.min.js"></script>
   <script type="text/javascript" src="./js/polyfill.js"></script>
