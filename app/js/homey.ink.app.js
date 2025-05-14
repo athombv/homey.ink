@@ -60,7 +60,7 @@ window.addEventListener('load', function () {
       later.setInterval(function () {
         renderHomey();
       }, later.parse.text('every 1 hour'));
-    }).catch(err => {
+    }).catch(function (err) {
       console.error(err);
       document.write('<pre>Error: ' + err.message + '\n' + err.stack);
     });
@@ -78,7 +78,7 @@ window.addEventListener('load', function () {
 
         homey.flow.getFlows().then(function (flows) {
           return homey.flow.getAdvancedFlows()
-            .catch(() => { return {} })
+            .catch(function () { return {} })
             .then(function (advancedFlows) {
               var favoriteFlows = me.properties.favoriteFlows.map(function (flowId) {
                 return flows[flowId] || advancedFlows[flowId];
