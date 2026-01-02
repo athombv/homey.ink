@@ -115,8 +115,8 @@ window.addEventListener('load', function () {
     }
 
     function renderWeather(weather) {
-      $weatherTemperature.innerHTML = Math.round(weather.temperature);
-      $weatherState.innerHTML = weather.state;
+      $weatherTemperature.innerText = Math.round(weather.temperature);
+      $weatherState.innerText = weather.state;
     }
 
     function renderFlows(flows) {
@@ -146,7 +146,7 @@ window.addEventListener('load', function () {
 
         var $name = document.createElement('div');
         $name.classList.add('name');
-        $name.innerHTML = flow.name;
+        $name.innerText = flow.name;
         $flow.appendChild($name);
       });
     }
@@ -178,7 +178,7 @@ window.addEventListener('load', function () {
 
         var $name = document.createElement('div');
         $name.classList.add('name');
-        $name.innerHTML = device.name;
+        $name.innerText = device.name;
         $device.appendChild($name);
       });
     }
@@ -198,8 +198,8 @@ window.addEventListener('load', function () {
         tod = 'night';
       }
 
-      $textLarge.innerHTML = 'Good ' + tod + '!';
-      $textSmall.innerHTML = 'Today is ' + moment(now).format('dddd[, the ]Do[ of ]MMMM YYYY[.]');
+      $textLarge.innerText = 'Good ' + tod + '!';
+      $textSmall.innerText = 'Today is ' + moment(now).format('dddd[, the ]Do[ of ]MMMM YYYY[.]');
     }
   } catch (err) {
     document.write('<pre>Error: ' + err.message + '\n' + err.stack);
