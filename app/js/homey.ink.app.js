@@ -1,6 +1,10 @@
 var CLIENT_ID = '5cbb504da1fc782009f52e46';
 var CLIENT_SECRET = 'gvhs0gebgir8vz8yo2l0jfb49u9xzzhrkuo1uvs8';
 
+var flowCache = {};
+var advancedFlowCache = {};
+var deviceCache = {};
+
 window.addEventListener('load', function () {
   try {
     var homey;
@@ -23,12 +27,10 @@ window.addEventListener('load', function () {
       renderText();
     }, later.parse.text('every 1 hour'));
 
-    var api = new AthomCloudAPI({
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-    });
-
     var theme = getQueryVariable('theme');
+    if (!theme) {
+      theme = 'web';
+    }
     var $css = document.createElement('link');
     $css.rel = 'stylesheet';
     $css.type = 'text/css';
@@ -42,7 +44,17 @@ window.addEventListener('load', function () {
 
     token = atob(token);
     token = JSON.parse(token);
-    api.setToken(token);
+    var tokenInstance = new AthomCloudAPI.Token({
+      access_token: token.access_token,
+      token_type: 'bearer',
+      refresh_token: token.refresh_token,
+      expires_in: token.expires_in,
+    });
+    var api = new AthomCloudAPI({
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      token: tokenInstance,
+    });
 
     api.isLoggedIn().then(function (loggedIn) {
       if (!loggedIn)
@@ -57,12 +69,17 @@ window.addEventListener('load', function () {
       homey = homey_;
 
       renderHomey();
+      setupRealtime();
       later.setInterval(function () {
         renderHomey();
       }, later.parse.text('every 1 hour'));
     }).catch(function (err) {
       console.error(err);
-      document.write('<pre>Error: ' + err.message + '\n' + err.stack);
+      document.head.innerHTML = '';
+      document.body.innerHTML = '';
+      var $pre = document.createElement('pre');
+      $pre.innerText = 'Error: ' + err.message + '\n' + err.stack;
+      document.body.appendChild($pre);
     });
 
     function renderHomey() {
@@ -77,9 +94,11 @@ window.addEventListener('load', function () {
         }).catch(console.error);
 
         homey.flow.getFlows().then(function (flows) {
+          flowCache = flows;
           return homey.flow.getAdvancedFlows()
             .catch(function () { return {} })
             .then(function (advancedFlows) {
+              advancedFlowCache = advancedFlows;
               var favoriteFlows = me.properties.favoriteFlows.map(function (flowId) {
                 return flows[flowId] || advancedFlows[flowId];
               }).filter(function (flow) {
@@ -90,6 +109,7 @@ window.addEventListener('load', function () {
         }).catch(console.error);
 
         homey.devices.getDevices().then(function (devices) {
+          deviceCache = devices;
           var favoriteDevices = me.properties.favoriteDevices.map(function (deviceId) {
             return devices[deviceId];
           }).filter(function (device) {
@@ -122,6 +142,7 @@ window.addEventListener('load', function () {
     function renderFlows(flows) {
       $flowsInner.innerHTML = '';
       flows.forEach(function (flow) {
+        if (!flow.triggerable) return;
         var $flow = document.createElement('div');
         $flow.id = 'flow-' + flow.id;
         $flow.classList.add('flow');
@@ -201,7 +222,98 @@ window.addEventListener('load', function () {
       $textLarge.innerText = 'Good ' + tod + '!';
       $textSmall.innerText = 'Today is ' + moment(now).format('dddd[, the ]Do[ of ]MMMM YYYY[.]');
     }
+
+    async function setupRealtime() {
+      await homey.devices.connect();
+      homey.devices.on('device.create', function (deviceData) {
+        deviceCache[deviceData.id] = deviceData;
+      });
+      homey.devices.on('device.update', function (deviceData) {
+        deviceCache[deviceData.id] = Object.assign({}, deviceCache[deviceData.id] || {}, deviceData);
+        var $device = document.getElementById('device-' + deviceData.id);
+        if ($device && deviceData.name !== $device.innerText) {
+          $device.querySelector('.name').innerText = deviceData.name;
+        }
+      });
+      homey.devices.on('device.delete', function (deviceData) {
+        delete deviceCache[deviceData.id];
+        var $device = document.getElementById('device-' + deviceData.id);
+        if ($device) {
+          $device.remove();
+        }
+      });
+      await homey.flow.connect();
+      homey.flow.on('flow.update', function (flowData) {
+        flowCache[flowData.id] = Object.assign({}, flowCache[flowData.id] || {}, flowData);
+        var $flow = document.getElementById('flow-' + flowData.id);
+        if ($flow && flowData.name !== $flow.innerText) {
+          $flow.querySelector('.name').innerText = flowData.name;
+        }
+        if ($flow && flowData.triggerable === false) {
+          $flow.remove();
+        }
+      });
+      homey.flow.on('flow.delete', function (flowData) {
+        delete flowCache[flowData.id];
+        var $flow = document.getElementById('flow-' + flowData.id);
+        if ($flow) {
+          $flow.remove();
+        }
+      });
+      homey.flow.on('flow.create', function (flowData) {
+        flowCache[flowData.id] = flowData;
+      });
+      homey.flow.on('advancedflow.update', function (flowData) {
+        advancedFlowCache[flowData.id] = Object.assign({}, advancedFlowCache[flowData.id] || {}, flowData);
+        var $flow = document.getElementById('flow-' + flowData.id);
+        if ($flow && flowData.name !== $flow.innerText) {
+          $flow.querySelector('.name').innerText = flowData.name;
+        }
+        if ($flow && flowData.triggerable === false) {
+          $flow.remove();
+        }
+      });
+      homey.flow.on('advancedflow.delete', function (flowData) {
+        delete advancedFlowCache[flowData.id];
+        var $flow = document.getElementById('flow-' + flowData.id);
+        if ($flow) {
+          $flow.remove();
+        }
+      });
+      homey.flow.on('advancedflow.create', function (flowData) {
+        advancedFlowCache[flowData.id] = flowData;
+      });
+      await homey.users.connect();
+      homey.users.on('user.update', function (userData) {
+        if (userData.id !== me.id || !userData.properties) return;
+        if (userData.properties.favoriteDevices) {
+          var favoriteDevices = userData.properties.favoriteDevices.map(function (deviceId) {
+            return deviceCache[deviceId];
+          }).filter(function (device) {
+            return !!device;
+          }).filter(function (device) {
+            if (!device.ui) return false;
+            if (!device.ui.quickAction) return false;
+            return true;
+          });
+          renderDevices(favoriteDevices);
+        }
+        if (userData.properties.favoriteFlows) {
+          var favoriteFlows = userData.properties.favoriteFlows.map(function (flowId) {
+            return flowCache[flowId] || advancedFlowCache[flowId];
+          }).filter(function (flow) {
+            return !!flow;
+          });
+          renderFlows(favoriteFlows);
+        }
+      });
+    }
   } catch (err) {
-    document.write('<pre>Error: ' + err.message + '\n' + err.stack);
+    document.body.innerHTML = '';
+    document.head.innerHTML = '';
+    var $pre = document.createElement('pre');
+    $pre.innerText = 'Error: ' + err.message + '\n' + err.stack;
+    document.body.appendChild($pre);
+    console.error(err);
   }
 });
