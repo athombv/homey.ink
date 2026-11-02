@@ -52,6 +52,7 @@ window.addEventListener('load', function () {
     }).then(function (user) {
       return user.getFirstHomey();
     }).then(function (homey) {
+      bindDelegationTokensToHomey(api, homey._id);
       return homey.authenticate();
     }).then(function (homey_) {
       homey = homey_;
@@ -200,6 +201,21 @@ window.addEventListener('load', function () {
 
       $textLarge.innerText = 'Good ' + tod + '!';
       $textSmall.innerText = 'Today is ' + moment(now).format('dddd[, the ]Do[ of ]MMMM YYYY[.]');
+    }
+
+    // athom-api always asks for a delegation token with only audience 'homey'.
+    // Adding the homeyId makes the token work on this Homey only.
+    function bindDelegationTokensToHomey(api, homeyId) {
+      var createDelegationToken = api.createDelegationToken;
+      api.createDelegationToken = function (opts) {
+        opts = opts || {};
+        if (opts.audience !== 'homey') return createDelegationToken.call(this, opts);
+        return createDelegationToken.call(this, {
+          audience: opts.audience,
+          meta: opts.meta,
+          $queryParameters: { homeyId: homeyId }
+        });
+      };
     }
   } catch (err) {
     document.write('<pre>Error: ' + err.message + '\n' + err.stack);
